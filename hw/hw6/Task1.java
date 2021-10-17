@@ -16,7 +16,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Task1 {
-    public static Factory factory = new Factory();
+    private static Factory factory = new Factory();
 
     public static void main(String[] args) {
         Thread usa = new Thread(Task1::createRobot);
