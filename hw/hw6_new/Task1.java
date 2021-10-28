@@ -1,60 +1,87 @@
 package by.it_academy.hw.hw6_new;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
+import java.util.Random;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Task1 {
+    private static final Random RANDOM = new Random();
+    private static final AtomicBoolean flag = new AtomicBoolean(true);
 
     public static void main(String[] args) {
-        Thread thread = new Thread(new Producer());
-        Thread thread1 = new Thread(new Consumer());
-        Thread thread2 = new Thread(new Consumer());
+        GeneralPartsList generalList = new GeneralPartsList();
 
-        thread.setName("Завод");
-        thread1.setName("Канада");
-        thread2.setName("Америка");
-
-        thread.start();
-        thread1.start();
-        thread2.start();
-
-        try {
-            thread1.join();
-            thread2.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        ExecutorService service = Executors.newFixedThreadPool(3);
+        service.execute(new Producer(generalList));
+        service.execute(new Consumer(generalList));
+        service.execute(new Consumer(generalList));
+        service.shutdown();
 
     }
 
     static class Producer implements Runnable {
-        Keeper keeper = new Keeper();
+        GeneralPartsList generalList;
+
+        public Producer(GeneralPartsList partsList) {
+            this.generalList = partsList;
+        }
 
         @Override
         public void run() {
-            keeper.addPart();
+            while (flag.get()) {
+                generalList.addPart(randomParts(RANDOM.nextInt(6)));
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
     static class Consumer implements Runnable {
-        Keeper keeper = new Keeper();
-        List<PartOfRobot> parts_one_robot = new ArrayList<>();
+        GeneralPartsList generalList;
+        LinkedList<PartOfRobot> localList;
+        int counter = 0;
+
+        public Consumer(GeneralPartsList partsList) {
+            this.generalList = partsList;
+            localList = new LinkedList<>();
+        }
 
         @Override
         public void run() {
-            while (true) {
-                keeper.getPart(parts_one_robot);
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+            while (flag.get()) {
+
+                if (counter == 2) {
+                    System.out.println(Thread.currentThread().getName() + " is WINNER!!");
+                    flag.lazySet(false);
                 }
-                if (parts_one_robot.size() == 6) {
-                    System.out.println(Thread.currentThread().getName() + " is WINNER!!!");
-                    parts_one_robot.clear();
-                    break;
+
+                for (PartOfRobot p : PartOfRobot.values()) {
+                    if (generalList.getPart(p) != null && !localList.contains(p)) {
+                        localList.add(p);
+                        System.out.println(Thread.currentThread().getName() + " забрал " + p);
+                    }
+                }
+                if (localList.size() == 6) {
+                    counter++;
+                    System.out.println("-----------------------------" + Thread.currentThread().getName() + " создал робота " + counter);
+                    localList.clear();
                 }
             }
         }
+    }
+
+
+    public static PartOfRobot randomParts(int number) {
+        for (PartOfRobot i : PartOfRobot.values()) {
+            if (i.getValue() == number) {
+                return i;
+            }
+        }
+        return null;
     }
 }
