@@ -1,14 +1,10 @@
 package by.it_academy.hw.hw4.factories;
 
-import by.it_academy.hw.hw4.cars.BMW;
-import by.it_academy.hw.hw4.cars.Car;
+import by.it_academy.hw.hw4.cars.*;
 import by.it_academy.hw.hw4.enums.*;
 import by.it_academy.hw.hw4.interfaces.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class FactoryBMW extends Factory<ModelBMW> implements SearchCar<ModelBMW, ColorBMW, WheelSizeBMW>, CreateCar<ModelBMW, ColorBMW, WheelSizeBMW> {
 
