@@ -32,28 +32,26 @@ public class FactoryBMW extends Factory<ModelBMW> implements SearchCar<ModelBMW,
 
     @Override
     public Car searchInStorage(Label label, ModelBMW modelBMW, int year, Capacity capacity, ColorBMW color, WheelSizeBMW wheels) {
-        for (Car car : storage.getStorage()) {
-            if (car.getLabel().equals(label) && car.getModel().equals(modelBMW) && car.getYear() == year && car.getEngineCapacity().equals(capacity)
-                    && car.getColor().equals(color) && car.getWheelSize().equals(wheels)) {
+       for (Car car : storage.getStorage()) {
+            boolean isSame = car.getLabel().equals(label) && car.getModel().equals(modelBMW) && car.getYear() == year && car.getEngineCapacity().equals(capacity);
+            if (isSame && car.getColor().equals(color) && car.getWheelSize().equals(wheels)) {
                 Car tmp = car;
                 storage.removeCarFromStorage(car);
                 System.out.println("На складе фабрики найдена необходимая машина: ");
                 return tmp;
-            } else if (car.getLabel().equals(label) && car.getModel().equals(modelBMW) && car.getYear() == year && car.getEngineCapacity().equals(capacity)
-                    && car.getColor().equals(color)) {
+            } else if (isSame && car.getColor().equals(color)) {
                 Car tmp = car;
                 serviceWheelSize.changeCar(tmp, wheels);
                 storage.removeCarFromStorage(car);
                 System.out.println("На складе фабрики найдена необходимая машина: ");
                 return tmp;
-            } else if (car.getLabel().equals(label) && car.getModel().equals(modelBMW) && car.getYear() == year && car.getEngineCapacity().equals(capacity)
-                    && car.getWheelSize().equals(wheels)) {
+            } else if (isSame && car.getWheelSize().equals(wheels)) {
                 Car tmp = car;
                 serviceColor.changeCar(tmp, color);
                 storage.removeCarFromStorage(car);
                 System.out.println("На складе фабрики найдена необходимая машина: ");
                 return tmp;
-            } else if (car.getLabel().equals(label) && car.getModel().equals(modelBMW) && car.getYear() == year && car.getEngineCapacity().equals(capacity)) {
+            } else if (isSame) {
                 Car tmp = car;
                 serviceColor.changeCar(tmp, color);
                 serviceWheelSize.changeCar(tmp, wheels);
