@@ -14,8 +14,8 @@ public class FactoryBMW extends Factory<ModelBMW> implements SearchCar<ModelBMW,
 
     public FactoryBMW() {
         List<Car> cars = new ArrayList<>();
-        cars.add(new BMW(ModelBMW.E88, 2020, Capacity.LARGE, ColorBMW.GREEN, WheelSizeBMW.R16, Set.of(OptionBMW.CONDITIONER)));
-        cars.add(new BMW(ModelBMW.F20, 2021, Capacity.SMALL, ColorBMW.WHITE, WheelSizeBMW.R17, Set.of(OptionBMW.CRUISECONTROL)));
+        cars.add(new BMW(ModelBMW.E88, 2020, Capacity.LARGE, ColorBMW.GREEN, WheelSizeBMW.R16));
+        cars.add(new BMW(ModelBMW.F20, 2021, Capacity.SMALL, ColorBMW.WHITE, WheelSizeBMW.R17));
         cars.add(new BMW(ModelBMW.E88, 2020, Capacity.LARGE, ColorBMW.RED, WheelSizeBMW.R18));
         this.storage = new Storage(cars);
         this.colorList.addAll(Arrays.asList(ColorBMW.values()));
