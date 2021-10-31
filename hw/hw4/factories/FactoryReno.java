@@ -34,27 +34,25 @@ public class FactoryReno extends Factory<ModelReno> implements SearchCar<ModelRe
     @Override
     public Car searchInStorage(Label label, ModelReno modelReno, int year, Capacity capacity, ColorReno color, WheelSizeReno wheels) {
         for (Car car : storage.getStorage()) {
-            if (car.getLabel().equals(label) && car.getModel().equals(modelReno) && car.getYear() == year && car.getEngineCapacity().equals(capacity)
-                    && car.getColor().equals(color) && car.getWheelSize().equals(wheels)) {
+            boolean isSame = car.getLabel().equals(label) && car.getModel().equals(modelReno) && car.getYear() == year && car.getEngineCapacity().equals(capacity);
+            if (isSame && car.getColor().equals(color) && car.getWheelSize().equals(wheels)) {
                 Car tmp = car;
                 storage.removeCarFromStorage(car);
                 System.out.println("На складе фабрики найдена необходимая машина: ");
                 return tmp;
-            } else if (car.getLabel().equals(label) && car.getModel().equals(modelReno) && car.getYear() == year && car.getEngineCapacity().equals(capacity)
-                    && car.getColor().equals(color)) {
+            } else if (isSame && car.getColor().equals(color)) {
                 Car tmp = car;
                 serviceWheelSize.changeCar(tmp, wheels);
                 storage.removeCarFromStorage(car);
                 System.out.println("На складе фабрики найдена необходимая машина: ");
                 return tmp;
-            } else if (car.getLabel().equals(label) && car.getModel().equals(modelReno) && car.getYear() == year && car.getEngineCapacity().equals(capacity)
-                    && car.getWheelSize().equals(wheels)) {
+            } else if (isSame && car.getWheelSize().equals(wheels)) {
                 Car tmp = car;
                 serviceColor.changeCar(tmp, color);
                 storage.removeCarFromStorage(car);
                 System.out.println("На складе фабрики найдена необходимая машина: ");
                 return tmp;
-            } else if (car.getLabel().equals(label) && car.getModel().equals(modelReno) && car.getYear() == year && car.getEngineCapacity().equals(capacity)) {
+            } else if (isSame) {
                 Car tmp = car;
                 serviceColor.changeCar(tmp, color);
                 serviceWheelSize.changeCar(tmp, wheels);
