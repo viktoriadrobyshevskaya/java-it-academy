@@ -19,43 +19,37 @@ public class Store {
 
     public <T> Car createOrder(Label label, T model, int year, Capacity capacity, AbleToChangeColor color, AbleToChangeWheels wheels) {
         try {
-            if (label == Label.BMW && color instanceof ColorBMW && wheels instanceof WheelSizeBMW) {
+            if (label == Label.BMW) {
                 return factoryBMW.createCar(label, (ModelBMW) model, year, capacity, (ColorBMW) color, (WheelSizeBMW) wheels);
-            } else if (label == Label.RENO && color instanceof ColorReno && wheels instanceof WheelSizeReno) {
+            } else if (label == Label.RENO) {
                 return factoryReno.createCar(label, (ModelReno) model, year, capacity, (ColorReno) color, (WheelSizeReno) wheels);
-            } else if (label == Label.FERRARI && color instanceof ColorFerrari && wheels instanceof WheelSizeFerrari) {
+            } else if (label == Label.FERRARI) {
                 return factoryFerrari.createCar(label, (ModelFerrari) model, year, capacity, (ColorFerrari) color, (WheelSizeFerrari) wheels);
             }
         } catch (ClassCastException e) {
-            System.out.println("Вы ввели неверные параметры. Машина не создана.");
+            System.out.print("Машина не создана. ");
         }
-        System.out.println("Вы ввели неверные параметры. Машина не создана.");
+        System.out.println("Вы ввели неверные параметры.");
         return null;
     }
 
-    public Car changeColorCar(Car car, AbleToChangeColor color) {
+    public void changeColorCar(Car car, AbleToChangeColor color) {
         serviceColor.changeCar(car, color);
-        return car;
     }
 
-    public Car changeCarWheelSize(Car car, AbleToChangeWheels wheels) {
+    public void changeCarWheelSize(Car car, AbleToChangeWheels wheels) {
         serviceWheelSize.changeCar(car, wheels);
-        return car;
     }
 
-    public <T extends AbleToChangeOptions> Car setNewOptionsInCar(Car car, Set<T> options) {
+    public <T extends AbleToChangeOptions> void setNewOptionsInCar(Car car, Set<T> options) {
         serviceOption.setNewListOptions(car, options);
-        return car;
     }
 
-    public Car addNewOptionInCar(Car car, AbleToChangeOptions option) {
+    public void addNewOptionInCar(Car car, AbleToChangeOptions option) {
         serviceOption.changeCar(car, option);
-        return car;
     }
 
-    public Car removeOptionInCar(Car car, AbleToChangeOptions option) {
+    public void removeOptionInCar(Car car, AbleToChangeOptions option) {
         serviceOption.removeOption(car, option);
-        return car;
     }
-
 }
