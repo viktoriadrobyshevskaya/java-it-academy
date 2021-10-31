@@ -4,17 +4,14 @@ import by.it_academy.hw.hw4.cars.*;
 import by.it_academy.hw.hw4.enums.*;
 import by.it_academy.hw.hw4.interfaces.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class FactoryReno extends Factory<ModelReno> implements SearchCar<ModelReno, ColorReno, WheelSizeReno>, CreateCar<ModelReno, ColorReno, WheelSizeReno> {
 
     public FactoryReno() {
         List<Car> cars = new ArrayList<>();
-        cars.add(new Reno(ModelReno.DUSTER, 2019, Capacity.LARGE, ColorReno.BLACK, WheelSizeReno.R17, Set.of(OptionReno.MASSAGE_SEAT)));
-        cars.add(new Reno(ModelReno.ARKANA, 2020, Capacity.SMALL, ColorReno.GREY, WheelSizeReno.R17, Set.of(OptionReno.PARKTRONIC)));
+        cars.add(new Reno(ModelReno.DUSTER, 2019, Capacity.LARGE, ColorReno.BLACK, WheelSizeReno.R17));
+        cars.add(new Reno(ModelReno.ARKANA, 2020, Capacity.SMALL, ColorReno.GREY, WheelSizeReno.R17));
         cars.add(new Reno(ModelReno.ARKANA, 2020, Capacity.LARGE, ColorReno.BLACK, WheelSizeReno.R16));
         this.storage = new Storage(cars);
 
